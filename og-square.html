@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 600px;
+    height: 600px;
+    background: #0F1117;
+    font-family: 'Inter', -apple-system, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .card {
+    width: 600px;
+    height: 600px;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+  }
+  .headshot {
+    width: 140px;
+    height: 170px;
+    margin-bottom: 24px;
+    border-radius: 16px;
+    object-fit: cover;
+    object-position: top center;
+    border: 3px solid #2DD4BF;
+  }
+  .label {
+    color: #2DD4BF;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .name {
+    color: #FFFFFF;
+    font-size: 72px;
+    font-weight: 700;
+    line-height: 1.05;
+    margin-bottom: 24px;
+  }
+  .desc {
+    color: #A0A0B0;
+    font-size: 21px;
+    line-height: 1.5;
+    max-width: 500px;
+  }
+  .accent-line {
+    width: 50px;
+    height: 4px;
+    background: #2DD4BF;
+    border-radius: 2px;
+    margin-top: 30px;
+  }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="card">
+  <img src="headshot.jpg" class="headshot" alt="">
+  <div class="label">Operations Leader</div>
+  <div class="name">Vishal Shah</div>
+  <div class="desc">Business transformation, financial excellence and people&nbsp;&amp;&nbsp;process optimisation.</div>
+  <div class="accent-line"></div>
+</div>
+</body>
+</html>
