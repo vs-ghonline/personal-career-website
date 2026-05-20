@@ -1,20 +1,41 @@
 // ============================================
-// Dark Mode Toggle
+// Theme: System / Light / Dark cycle
+// Initial theme is applied by inline <script> in <head> (avoids FOUC).
+// This block adds the click cycle + reacts to OS theme changes.
 // ============================================
+const STATES = ['system', 'light', 'dark'];
 const themeToggle = document.getElementById('theme-toggle');
+const mq = window.matchMedia('(prefers-color-scheme: dark)');
 
-function setTheme(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
+function resolveEffective(mode) {
+    return mode === 'system' ? (mq.matches ? 'dark' : 'light') : mode;
 }
 
-// Default to dark mode; only switch to light if user explicitly saved that preference
-const savedTheme = localStorage.getItem('theme');
-setTheme(savedTheme || 'dark');
+function applyMode(mode) {
+    document.documentElement.setAttribute('data-theme-mode', mode);
+    document.documentElement.setAttribute('data-theme', resolveEffective(mode));
+    const next = STATES[(STATES.indexOf(mode) + 1) % STATES.length];
+    const label = `Theme: ${mode} — click for ${next}`;
+    themeToggle.setAttribute('aria-label', label);
+    themeToggle.setAttribute('title', label);
+    if (mode === 'system') localStorage.removeItem('theme');
+    else localStorage.setItem('theme', mode);
+}
 
+// Sync the aria-label with whatever mode the inline init script set
+applyMode(document.documentElement.getAttribute('data-theme-mode') || 'system');
+
+// Cycle on click: system → light → dark → system → ...
 themeToggle.addEventListener('click', () => {
-    const current = document.documentElement.getAttribute('data-theme');
-    setTheme(current === 'dark' ? 'light' : 'dark');
+    const current = document.documentElement.getAttribute('data-theme-mode');
+    applyMode(STATES[(STATES.indexOf(current) + 1) % STATES.length]);
+});
+
+// React to OS theme changes — only while user is in system mode
+mq.addEventListener('change', () => {
+    if (document.documentElement.getAttribute('data-theme-mode') === 'system') {
+        document.documentElement.setAttribute('data-theme', resolveEffective('system'));
+    }
 });
 
 // ============================================
